@@ -12,16 +12,18 @@ macOS packages are available separately for Apple Silicon and Intel. They requir
 
 ## Windows installer
 
+**Windows installer 1.0.2** replaces silent VBScript shortcuts with a visible `Forge.exe` startup window. A short-lived supervisor waits for the detached local server to be ready, captures early runtime errors in `launcher.log`, and reports failures. The GUI then uses Windows ShellExecute to open the browser, avoiding `cmd /c start` quoting. The desktop UI remains browser-based, not a separate native editor. Native Windows launch still needs confirmation.
+
 **Windows installer 1.0.1** fixes the version gate that incorrectly rejected a Windows 11 machine. It uses `ntdll!RtlGetVersion`, accepts native major versions 10 and later, and still requires a 64-bit system. The old 1.0.0 Windows download has been removed from the current download folder. Native Windows installation still needs verification.
 
-The local Windows 10/11 x64 edition is packaged as **Forge-Academy-1.0.1-win-x64-Setup.exe** (under ignored `releases/`). It installs for the current user without elevation, bundles Node and every current coding runtime, and launches the academy in the default browser. It is not an Electron/native-window app. No separate Python, Node, Docker, or internet download is required for the included lessons.
+The local Windows 10/11 x64 edition is packaged as **Forge-Academy-1.0.2-win-x64-Setup.exe** (under ignored `releases/`). It installs for the current user without elevation, bundles Node and every current coding runtime, and launches the academy in the default browser. It is not an Electron/native-window app. No separate Python, Node, Docker, or internet download is required for the included lessons.
 
 - **Launch:** Start menu → Forge Coding Academy.
 - **Stop:** Start menu → Forge Coding Academy → Stop Forge. Closing the browser does not stop the server.
 - **Local address:** `http://127.0.0.1:33791`, loopback-only; an authenticated loopback management endpoint uses port 33792.
 - **Progress:** `%LOCALAPPDATA%\ForgeAcademy\academy.db`. Uninstall preserves this folder. Preview progress is not automatically imported. Use a local account to recover the identity if browser cookies are cleared.
 - **Remove:** Windows Settings → Apps → Forge Coding Academy.
-- **Signature:** unsigned; an unknown-publisher/SmartScreen warning may occur. Check `releases/SHA256SUMS.txt`; do not disable security protections. Windows Script Host is used for the shortcuts.
+- **Signature:** unsigned; an unknown-publisher/SmartScreen warning may occur. Check `releases/SHA256SUMS.txt`; do not disable security protections. The shortcuts now use the native `Forge.exe` startup window; Windows Script Host is not needed.
 
 Build on this Linux workspace after installing dependencies and building the frontend:
 

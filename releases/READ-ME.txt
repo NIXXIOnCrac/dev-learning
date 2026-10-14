@@ -1,4 +1,4 @@
-FORGE CODING ACADEMY — WINDOWS LOCAL EDITION 1.0.1
+FORGE CODING ACADEMY — WINDOWS LOCAL EDITION 1.0.2
 
 Windows 10/11, x64. No Node.js, Python, Docker, or administrator access required.
 Run the Setup.exe, then open Forge Coding Academy from your Start menu or desktop.
@@ -32,8 +32,9 @@ LOG: %LOCALAPPDATA%\ForgeAcademy\launcher.log
 This installer is unsigned. Windows may show an unknown-publisher or SmartScreen
 warning. Verify the supplied SHA-256 before choosing whether to run it. Do not
 disable Windows security protections. Organization-managed PCs may block it.
-Windows Script Host (normally present) is required for the shortcuts. If your
-organization disables it, consult your administrator rather than changing policy.
+The desktop and Start menu shortcuts use Forge.exe, not Windows Script Host.
+A small startup window checks that the local server is ready, then opens your
+browser through Windows directly. A failure is shown rather than hidden.
 
 Build verification: installer compiled on Linux; Windows GUI/shortcuts/installation
 were not run in this environment. The packaged server and runtimes were tested
@@ -44,3 +45,10 @@ Replaces the compiler-dependent Windows-version helper with RtlGetVersion.
 Windows 10 and Windows 11 both use kernel major version 10. The x64 check and
 minimum OS requirement remain enforced. Native installation still needs a
 Windows test; do not use compatibility mode to work around the old installer.
+
+1.0.2 LAUNCHER FIX
+Replaces the hidden VBScript shortcut with Forge.exe. It displays startup
+progress, captures early Node errors in launcher.log, and waits for the server
+to become ready before asking Windows to open the browser. Repeated launches
+reuse the existing server. If Windows cannot open your browser, the launcher
+shows the local URL so you can open it yourself.

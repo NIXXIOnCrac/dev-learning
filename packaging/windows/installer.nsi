@@ -11,10 +11,10 @@ RequestExecutionLevel user
 SetCompressor /SOLID lzma
 SetCompressorDictSize 32
 !include "windows-version.nsh"
-VIProductVersion "1.0.1.0"
+VIProductVersion "1.0.2.0"
 VIAddVersionKey "ProductName" "Forge Coding Academy"
 VIAddVersionKey "FileDescription" "Forge Coding Academy — Windows installer"
-VIAddVersionKey "FileVersion" "1.0.1"
+VIAddVersionKey "FileVersion" "1.0.2"
 VIAddVersionKey "LegalCopyright" "Forge Coding Academy contributors"
 !define MUI_ABORTWARNING
 !define MUI_WELCOMEPAGE_TITLE "Learn by writing real code."
@@ -38,7 +38,7 @@ Function .onInit
   SetShellVarContext current
 FunctionEnd
 Function LaunchForge
-  ExecShell "open" "$SYSDIR\wscript.exe" '"$INSTDIR\launch.vbs"'
+  Exec '"$INSTDIR\Forge.exe"'
 FunctionEnd
 Section "Forge Coding Academy (required)" Main
   SectionIn RO
@@ -52,20 +52,22 @@ Section "Forge Coding Academy (required)" Main
   install:
   SetOutPath "$INSTDIR"
   File /r "${PAYLOAD}/*"
+  Delete "$INSTDIR\launch.vbs"
+  Delete "$INSTDIR\message.vbs"
   WriteUninstaller "$INSTDIR\Uninstall.exe"
   CreateDirectory "$SMPROGRAMS\Forge Coding Academy"
-  CreateShortcut "$SMPROGRAMS\Forge Coding Academy\Forge Coding Academy.lnk" "$SYSDIR\wscript.exe" '"$INSTDIR\launch.vbs"' "$INSTDIR\forge.ico"
-  CreateShortcut "$SMPROGRAMS\Forge Coding Academy\Stop Forge.lnk" "$SYSDIR\wscript.exe" '"$INSTDIR\launch.vbs" --stop' "$INSTDIR\forge.ico"
+  CreateShortcut "$SMPROGRAMS\Forge Coding Academy\Forge Coding Academy.lnk" "$INSTDIR\Forge.exe" "" "$INSTDIR\forge.ico"
+  CreateShortcut "$SMPROGRAMS\Forge Coding Academy\Stop Forge.lnk" "$INSTDIR\Forge.exe" "--stop" "$INSTDIR\forge.ico"
   CreateShortcut "$SMPROGRAMS\Forge Coding Academy\Read me.lnk" "$INSTDIR\INSTALLATION.txt"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\ForgeAcademy" "DisplayName" "Forge Coding Academy"
-  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\ForgeAcademy" "DisplayVersion" "1.0.1"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\ForgeAcademy" "DisplayVersion" "1.0.2"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\ForgeAcademy" "UninstallString" '$\"$INSTDIR\Uninstall.exe$\"'
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\ForgeAcademy" "DisplayIcon" "$INSTDIR\forge.ico"
   WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\ForgeAcademy" "NoModify" 1
   WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\ForgeAcademy" "NoRepair" 1
 SectionEnd
 Section "Desktop shortcut"
-  CreateShortcut "$DESKTOP\Forge Coding Academy.lnk" "$SYSDIR\wscript.exe" '"$INSTDIR\launch.vbs"' "$INSTDIR\forge.ico"
+  CreateShortcut "$DESKTOP\Forge Coding Academy.lnk" "$INSTDIR\Forge.exe" "" "$INSTDIR\forge.ico"
 SectionEnd
 Section "Uninstall"
   SetShellVarContext current

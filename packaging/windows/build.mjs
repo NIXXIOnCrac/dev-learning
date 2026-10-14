@@ -13,7 +13,7 @@ const cache = path.join(root, ".cache/forge-installer");
 const payload = path.join(cache, "payload");
 const output = path.join(
   root,
-  "releases/Forge-Academy-1.0.1-win-x64-Setup.exe",
+  "releases/Forge-Academy-1.0.2-win-x64-Setup.exe",
 );
 const nodeVersion = "22.23.3";
 const nsisBlob = "51fe3639ee90f22d5d8461f089d25975b12cab90";
@@ -126,13 +126,7 @@ copy(
   path.join(nodeExtract, "package/bin/node.exe"),
   path.join(payload, "node.exe"),
 );
-for (const file of [
-  "launcher.cjs",
-  "launch.vbs",
-  "message.vbs",
-  "INSTALLATION.txt",
-  "forge.ico",
-])
+for (const file of ["launcher.cjs", "INSTALLATION.txt", "forge.ico"])
   copy(path.join(source, file), path.join(payload, file));
 const licenses = path.join(payload, "licenses");
 fs.mkdirSync(licenses, { recursive: true });
@@ -178,6 +172,12 @@ download(
   `https://api.github.com/repos/pyodide/pyodide/contents/LICENSE?ref=${pyVersion}`,
   path.join(licenses, "Pyodide-LICENSE.txt"),
 );
+run(path.join(cache, "nsis-bundle/makensis"), [
+  "-V3",
+  `-DPAYLOAD=${payload}`,
+  `-DOUTPUT=${path.join(payload, "Forge.exe")}`,
+  path.join(source, "bootstrap.nsi"),
+]);
 run(path.join(cache, "nsis-bundle/makensis"), [
   "-V3",
   `-DPAYLOAD=${payload}`,

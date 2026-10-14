@@ -174,3 +174,75 @@ test("Windows version guard reads the native version and accepts both Windows 10
     );
   }
 });
+test(
+  "GUI supervisor starts a detached server, reuses it, and surfaces pre-ready failures",
+  { timeout: 30000 },
+  async (t) => {
+    const { ensureStarted } = require(launcher);
+    const dataDir = fs.mkdtempSync(
+      path.join(os.tmpdir(), "forge-gui-supervisor-"),
+    );
+    const appPort = await freePort(),
+      controlPort = await freePort();
+    const options = { dataDir, appRoot: root, appPort, controlPort };
+    const stateFile = path.join(dataDir, "local-server.json");
+    const stop = async () => {
+      if (fs.existsSync(stateFile)) {
+        const token = JSON.parse(fs.readFileSync(stateFile)).token;
+        try {
+          await request(controlPort, token, "POST");
+        } catch {}
+        for (let i = 0; i < 100 && fs.existsSync(stateFile); i++)
+          await new Promise((r) => setTimeout(r, 30));
+      }
+    };
+    t.after(async () => {
+      await stop();
+      fs.rmSync(dataDir, { recursive: true, force: true });
+    });
+    await ensureStarted(options);
+    const first = fs.readFileSync(stateFile, "utf8");
+    assert.equal(
+      (await fetch(`http://127.0.0.1:${appPort}/api/state`)).status,
+      200,
+    );
+    await ensureStarted(options);
+    assert.equal(
+      fs.readFileSync(stateFile, "utf8"),
+      first,
+      "repeated clicks must reuse the server",
+    );
+    await stop();
+    assert.equal(fs.existsSync(stateFile), false);
+    await assert.rejects(
+      ensureStarted({ ...options, appRoot: path.join(dataDir, "missing-app") }),
+      /Server exited before startup/,
+    );
+    assert.match(
+      fs.readFileSync(path.join(dataDir, "launcher.log"), "utf8"),
+      /ERR_MODULE_NOT_FOUND|Cannot find module/,
+    );
+    await assert.rejects(
+      ensureStarted({
+        ...options,
+        nodeExecutable: path.join(dataDir, "missing-node"),
+      }),
+      /ENOENT/,
+    );
+  },
+);
+test("Windows shortcuts use the GUI executable, wait for readiness, and show errors without VBScript", () => {
+  const installer = fs.readFileSync("packaging/windows/installer.nsi", "utf8");
+  const bootstrap = fs.readFileSync("packaging/windows/bootstrap.nsi", "utf8");
+  for (const line of installer
+    .split("\n")
+    .filter((l) => l.includes("CreateShortcut") && !l.includes("Read me"))) {
+    assert.match(line, /\\Forge\.exe/);
+    assert.doesNotMatch(line, /wscript|\.vbs/);
+  }
+  assert.match(bootstrap, /--ensure-started/);
+  assert.match(bootstrap, /ShowInstDetails show/);
+  assert.match(bootstrap, /ExecShell "open" "http:\/\/127\.0\.0\.1:33791"/);
+  assert.match(bootstrap, /MessageBox MB_ICONSTOP "Forge could not start/);
+  assert.match(bootstrap, /nsExec::ExecToStack/);
+});
