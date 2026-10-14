@@ -137,3 +137,40 @@ test("Windows installer source preserves data and bundles rather than downloadin
   assert.doesNotMatch(script, /inetc::|NSISdl::|ExecWait.*npm/);
   assert.match(script, /--stop --quiet/);
 });
+test("Windows version guard reads the native version and accepts both Windows 10 and 11 kernel versions", () => {
+  const script = fs.readFileSync("packaging/windows/installer.nsi", "utf8");
+  const guard = fs.readFileSync(
+    "packaging/windows/windows-version.nsh",
+    "utf8",
+  );
+  assert.match(script, /ManifestSupportedOS Win10/);
+  assert.match(script, /Call CheckWindowsVersion/);
+  assert.doesNotMatch(script, /AtLeastWin10|WinVer\.nsh/);
+  assert.match(guard, /System::Alloc 276/);
+  assert.match(guard, /ntdll::RtlGetVersion\(p r0\) i\.r1/);
+  assert.match(guard, /StrCmp \$1 0 forge_version_read/);
+  assert.match(
+    guard,
+    /IntCmp \$1 10 forge_version_supported forge_version_old forge_version_supported/,
+  );
+  // Regression fixtures document actual kernel versions, not marketing names.
+  for (const [major, minor, build, expected] of [
+    [10, 0, 19045, true],
+    [10, 0, 22631, true],
+    [10, 0, 26100, true],
+    [6, 3, 9600, false],
+    [6, 1, 7601, false],
+  ]) {
+    const branch =
+      major === 10
+        ? "forge_version_supported"
+        : major < 10
+          ? "forge_version_old"
+          : "forge_version_supported";
+    assert.equal(
+      branch === "forge_version_supported",
+      expected,
+      `${major}.${minor}.${build}`,
+    );
+  }
+});

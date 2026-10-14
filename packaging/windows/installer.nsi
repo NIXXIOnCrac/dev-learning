@@ -1,7 +1,7 @@
 Unicode true
 !include "MUI2.nsh"
 !include "x64.nsh"
-!include "WinVer.nsh"
+ManifestSupportedOS Win10
 Icon "${PAYLOAD}/forge.ico"
 UninstallIcon "${PAYLOAD}/forge.ico"
 Name "Forge Coding Academy"
@@ -10,10 +10,11 @@ InstallDir "$LOCALAPPDATA\Programs\ForgeAcademy"
 RequestExecutionLevel user
 SetCompressor /SOLID lzma
 SetCompressorDictSize 32
-VIProductVersion "1.0.0.0"
+!include "windows-version.nsh"
+VIProductVersion "1.0.1.0"
 VIAddVersionKey "ProductName" "Forge Coding Academy"
 VIAddVersionKey "FileDescription" "Forge Coding Academy — Windows installer"
-VIAddVersionKey "FileVersion" "1.0.0"
+VIAddVersionKey "FileVersion" "1.0.1"
 VIAddVersionKey "LegalCopyright" "Forge Coding Academy contributors"
 !define MUI_ABORTWARNING
 !define MUI_WELCOMEPAGE_TITLE "Learn by writing real code."
@@ -33,10 +34,7 @@ Function .onInit
     MessageBox MB_ICONSTOP "This build requires 64-bit Windows 10 or Windows 11."
     Abort
   ${EndIf}
-  ${IfNot} ${AtLeastWin10}
-    MessageBox MB_ICONSTOP "Forge requires Windows 10 or Windows 11."
-    Abort
-  ${EndIf}
+  Call CheckWindowsVersion
   SetShellVarContext current
 FunctionEnd
 Function LaunchForge
@@ -60,7 +58,7 @@ Section "Forge Coding Academy (required)" Main
   CreateShortcut "$SMPROGRAMS\Forge Coding Academy\Stop Forge.lnk" "$SYSDIR\wscript.exe" '"$INSTDIR\launch.vbs" --stop' "$INSTDIR\forge.ico"
   CreateShortcut "$SMPROGRAMS\Forge Coding Academy\Read me.lnk" "$INSTDIR\INSTALLATION.txt"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\ForgeAcademy" "DisplayName" "Forge Coding Academy"
-  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\ForgeAcademy" "DisplayVersion" "1.0.0"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\ForgeAcademy" "DisplayVersion" "1.0.1"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\ForgeAcademy" "UninstallString" '$\"$INSTDIR\Uninstall.exe$\"'
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\ForgeAcademy" "DisplayIcon" "$INSTDIR\forge.ico"
   WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\ForgeAcademy" "NoModify" 1

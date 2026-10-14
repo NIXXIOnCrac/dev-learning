@@ -1,1 +1,1 @@
-fa8a795297f98f8a8a9e0016fc03ed00e101e39762d57248efc2ac3af1d8026c  Forge-Academy-1.0.0-win-x64-Setup.exe
+2f26ca96fbf1db162c09fbdbe5fa21ab12ddf6271c69f455f5e9025437fdc887  Forge-Academy-1.0.1-win-x64-Setup.exe

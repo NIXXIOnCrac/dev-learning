@@ -1,4 +1,4 @@
-FORGE CODING ACADEMY — WINDOWS LOCAL EDITION 1.0.0
+FORGE CODING ACADEMY — WINDOWS LOCAL EDITION 1.0.1
 
 Windows 10/11, x64. No Node.js, Python, Docker, or administrator access required.
 Run the Setup.exe, then open Forge Coding Academy from your Start menu or desktop.
@@ -38,3 +38,9 @@ organization disables it, consult your administrator rather than changing policy
 Build verification: installer compiled on Linux; Windows GUI/shortcuts/installation
 were not run in this environment. The packaged server and runtimes were tested
 with a Linux Node runtime. See the release notes for exact verification details.
+
+1.0.1 INSTALLER FIX
+Replaces the compiler-dependent Windows-version helper with RtlGetVersion.
+Windows 10 and Windows 11 both use kernel major version 10. The x64 check and
+minimum OS requirement remain enforced. Native installation still needs a
+Windows test; do not use compatibility mode to work around the old installer.

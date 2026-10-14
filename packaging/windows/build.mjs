@@ -13,7 +13,7 @@ const cache = path.join(root, ".cache/forge-installer");
 const payload = path.join(cache, "payload");
 const output = path.join(
   root,
-  "releases/Forge-Academy-1.0.0-win-x64-Setup.exe",
+  "releases/Forge-Academy-1.0.1-win-x64-Setup.exe",
 );
 const nodeVersion = "22.23.3";
 const nsisBlob = "51fe3639ee90f22d5d8461f089d25975b12cab90";

@@ -12,7 +12,9 @@ macOS packages are available separately for Apple Silicon and Intel. They requir
 
 ## Windows installer
 
-The local Windows 10/11 x64 edition is packaged as **Forge-Academy-1.0.0-win-x64-Setup.exe** (under ignored `releases/`). It installs for the current user without elevation, bundles Node and every current coding runtime, and launches the academy in the default browser. It is not an Electron/native-window app. No separate Python, Node, Docker, or internet download is required for the included lessons.
+**Windows installer 1.0.1** fixes the version gate that incorrectly rejected a Windows 11 machine. It uses `ntdll!RtlGetVersion`, accepts native major versions 10 and later, and still requires a 64-bit system. The old 1.0.0 Windows download has been removed from the current download folder. Native Windows installation still needs verification.
+
+The local Windows 10/11 x64 edition is packaged as **Forge-Academy-1.0.1-win-x64-Setup.exe** (under ignored `releases/`). It installs for the current user without elevation, bundles Node and every current coding runtime, and launches the academy in the default browser. It is not an Electron/native-window app. No separate Python, Node, Docker, or internet download is required for the included lessons.
 
 - **Launch:** Start menu → Forge Coding Academy.
 - **Stop:** Start menu → Forge Coding Academy → Stop Forge. Closing the browser does not stop the server.
