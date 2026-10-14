@@ -2,6 +2,14 @@
 
 A beginner-first coding academy built around **writing, executing, testing, and understanding actual code**. This repository implements the foundation and a working beginner vertical slice of the much larger requested learning platform. It is not a claim that all advanced courses or production sandbox infrastructure are finished.
 
+## Installer downloads
+
+Installers are currently available in the private repository's [`releases` folder on the working branch](https://github.com/NIXXIOnCrac/dev-learning/tree/arena/a74086e4-dev-learning/releases). Sign into GitHub with repository access before downloading. The temporary Arena/E2B preview URLs require platform authentication and are **not public download links**.
+
+The three installers were deliberately committed as a delivery exception because this workspace could push Git objects but could not upload GitHub Release assets. Their remote Git blob hashes and byte sizes were checked against the local builds. `releases/` remains ignored for future generated files; do not routinely add new binary versions to Git. Move future downloads to a release-asset host when uploading is available.
+
+macOS packages are available separately for Apple Silicon and Intel. They require macOS 11+ and administrator approval to install into `/Applications`. Launch **Forge Coding Academy** to open the local browser app; launch **Stop Forge** before updating or removing it. Progress lives in `~/Library/Application Support/ForgeAcademy/` and is preserved on removal. Both packages are unsigned and not notarized; **native Mac installation and Finder launch remain untested**. Package structure, payload checksums, architecture, and the application running with Linux Node were checked. Build with `npm run build:macos` and check the packaged applications with `npm run verify:macos` after building the frontend.
+
 ## Windows installer
 
 The local Windows 10/11 x64 edition is packaged as **Forge-Academy-1.0.0-win-x64-Setup.exe** (under ignored `releases/`). It installs for the current user without elevation, bundles Node and every current coding runtime, and launches the academy in the default browser. It is not an Electron/native-window app. No separate Python, Node, Docker, or internet download is required for the included lessons.
