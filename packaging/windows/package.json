@@ -1,0 +1,10 @@
+{
+  "name": "forge-local-runtime",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "express": "5.3.0",
+    "pg": "8.23.1"
+  }
+}

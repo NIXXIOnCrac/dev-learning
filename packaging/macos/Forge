@@ -1,0 +1,4 @@
+#!/bin/sh
+# Finder launches this local agent; Node and the browser handle the UI.
+RESOURCES=$(CDPATH= cd "$(/usr/bin/dirname "$0")/../Resources" && pwd) || exit 1
+exec "$RESOURCES/node" "$RESOURCES/launcher.cjs" "$@"

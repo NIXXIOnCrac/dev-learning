@@ -1,0 +1,29 @@
+services:
+  database:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: forge
+      POSTGRES_DB: forge
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in your environment or .env}
+    volumes:
+      - academy-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U forge -d forge"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+  academy:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://forge:${POSTGRES_PASSWORD}@database:5432/forge
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      TUTOR_API_KEY: ${TUTOR_API_KEY:-}
+      TUTOR_BASE_URL: ${TUTOR_BASE_URL:-https://api.openai.com/v1}
+      TUTOR_MODEL: ${TUTOR_MODEL:-gpt-4o-mini}
+    depends_on:
+      database:
+        condition: service_healthy
+volumes:
+  academy-postgres:

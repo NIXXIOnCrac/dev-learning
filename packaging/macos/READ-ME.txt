@@ -1,0 +1,51 @@
+FORGE CODING ACADEMY — macOS LOCAL EDITION 1.0.0
+
+REQUIREMENTS: macOS 11 Big Sur or newer; a compatible up-to-date browser.
+Choose Apple-Silicon for an Apple M-series chip, or Intel for an Intel processor.
+Check Apple menu > About This Mac > Chip / Processor if unsure.
+
+INSTALL
+1. Open the matching .pkg and follow the macOS Installer steps. Installation to
+   /Applications requires an administrator's approval.
+2. Open Applications > Forge Coding Academy. It opens your default browser at
+   http://127.0.0.1:33791. This is a local browser app, not a native-window editor.
+3. To stop its background server, open Applications > Stop Forge.
+
+Node.js and the Python, JavaScript, TypeScript, and SQLite practice runtimes are
+included. No separate developer tools or runtime downloads are required. The
+included lessons work offline. The tutor is guided, not a connected AI service.
+
+Closing the browser does not stop the local server. Forge does not automatically
+start at login. Launching Forge twice reuses the running instance. Stop Forge
+before reinstalling, upgrading, or removing it. Do not move the two apps apart.
+
+PROGRESS
+Saved locally in ~/Library/Application Support/ForgeAcademy/academy.db.
+Your online preview progress is NOT imported. Use the same browser for a guest
+profile; clearing cookies loses its identity. A local Forge account lets you
+sign back in on this installation. It is not a cloud-synced account.
+The app uses only loopback networking, not your Wi-Fi/LAN. Do not expose its
+ports (33791 and 33792) publicly.
+
+REMOVE
+Open Stop Forge, then move Forge Coding Academy and Stop Forge from Applications
+to Trash. Your progress folder is deliberately preserved. After stopping Forge,
+back up that entire folder, or explicitly remove it if you want to reset all data.
+The installer receipt can remain; it contains no learner progress.
+
+SECURITY / VERIFICATION
+This installer and the app wrappers are unsigned and not notarized. Gatekeeper
+may block opening them. Only proceed if you trust the source and have verified
+MACOS-SHA256SUMS.txt. If macOS offers approval, use its normal System Settings >
+Privacy & Security flow. Do not disable Gatekeeper or other system protections.
+Managed Macs may prohibit unsigned packages; consult your administrator.
+
+Built on Linux. Package archives, BOMs, architecture/OS metadata, file hashes,
+permissions, app runtime, and server lifecycle are checked here. The macOS
+Installer UI, Finder launch, native Node execution, and Gatekeeper behavior have
+NOT been tested on a Mac. A real Mac test remains necessary before wider release.
+
+Student code runs in disposable browser workers, never on the Node server.
+Personal learning progress is not an anti-cheat or competitive grading system.
+
+LOG: ~/Library/Application Support/ForgeAcademy/launcher.log
