@@ -1,0 +1,2 @@
+454165475d1873546ca685f01ebb7fe3853b9f5297578b08cd2330eb4677c522  Forge-Academy-1.0.0-macOS-Apple-Silicon.pkg
+6542f09a87abec84baaa011920d601d0796b0862faf1714312c52a9fb5525afd  Forge-Academy-1.0.0-macOS-Intel.pkg

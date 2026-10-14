@@ -1,0 +1,40 @@
+FORGE CODING ACADEMY — WINDOWS LOCAL EDITION 1.0.0
+
+Windows 10/11, x64. No Node.js, Python, Docker, or administrator access required.
+Run the Setup.exe, then open Forge Coding Academy from your Start menu or desktop.
+Forge starts its local server and opens your default browser at:
+  http://127.0.0.1:33791
+
+The learning content and Python, JavaScript, TypeScript, and SQLite runtimes are
+bundled. An internet connection is not needed for the included lessons. The
+tutor is the guided helper, not a connected AI provider.
+
+Closing the browser does not stop the local server. Use the Start menu shortcut
+"Stop Forge" to stop it. Opening Forge again reuses an already-running instance.
+It does not auto-start when you log into Windows.
+
+Progress lives in %LOCALAPPDATA%\ForgeAcademy\academy.db, outside the installation.
+Uninstalling or upgrading preserves this folder. To reset everything, stop Forge
+and explicitly delete that folder. Back it up only after stopping Forge.
+Your progress in the online preview is NOT copied into this installation.
+
+Use the same browser to resume a guest profile. Clearing its cookies loses
+access to the guest identity. Register a local account in Forge to sign in again;
+it stays on this computer and does not create an online account or send email.
+
+The server listens on loopback only, not your Wi-Fi/LAN. Do not expose its ports
+publicly. Student code executes in browser workers, never on the Node server.
+This is personal practice software, not a hardened competitive grading sandbox.
+
+UNINSTALL: Windows Settings > Apps > Forge Coding Academy > Uninstall.
+LOG: %LOCALAPPDATA%\ForgeAcademy\launcher.log
+
+This installer is unsigned. Windows may show an unknown-publisher or SmartScreen
+warning. Verify the supplied SHA-256 before choosing whether to run it. Do not
+disable Windows security protections. Organization-managed PCs may block it.
+Windows Script Host (normally present) is required for the shortcuts. If your
+organization disables it, consult your administrator rather than changing policy.
+
+Build verification: installer compiled on Linux; Windows GUI/shortcuts/installation
+were not run in this environment. The packaged server and runtimes were tested
+with a Linux Node runtime. See the release notes for exact verification details.
